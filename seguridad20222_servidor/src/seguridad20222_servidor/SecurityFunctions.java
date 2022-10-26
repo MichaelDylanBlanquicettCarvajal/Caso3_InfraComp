@@ -51,14 +51,20 @@ public class SecurityFunctions {
         System.out.println(decipheredMessage);
         return decipheredMessage;
     }
-    
+    /**
+	 * FUncion para generar el HMAC
+	 * @param msg
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
 	public byte[] hmac(byte[] msg, SecretKey key) throws Exception {
 		Mac mac = Mac.getInstance("HMACSHA256");
 		mac.init(key);
 		byte[] bytes = mac.doFinal(msg);
 		return bytes;
 	}
-
+	
 	public boolean checkInt(byte[] msg, SecretKey key, byte [] hash ) throws Exception
 	{
 		byte [] nuevo = hmac(msg, key);
@@ -71,6 +77,9 @@ public class SecurityFunctions {
 		return true;
 	}
     
+	/**
+	 * Metodo que parece hacer el digest usanod SHA-512
+	 */
     public SecretKey csk1(String semilla) throws Exception {
     	byte[] byte_semilla = semilla.trim().getBytes(StandardCharsets.UTF_8);
     	MessageDigest digest = MessageDigest.getInstance("SHA-512");
