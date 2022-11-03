@@ -67,13 +67,13 @@ public class SrvThread extends Thread{
 			linea = dc.readLine();
 			System.out.println(dlg + "reading request: " + linea);
     		
-    		generateGandP();
-			SecureRandom r = new SecureRandom();
+    		generateGandP();// P
+			SecureRandom r = new SecureRandom();// X
 			int x = Math.abs(r.nextInt());
 			
     		Long longx = Long.valueOf(x);
     		BigInteger bix = BigInteger.valueOf(longx);
-    		BigInteger valor_comun = G2X(g,bix,p);
+    		BigInteger valor_comun = G2X(g,bix,p); // diffhelman
     		String str_valor_comun = valor_comun.toString();
     		System.out.println(dlg + "G2X: "+str_valor_comun);
     		    		
@@ -81,7 +81,8 @@ public class SrvThread extends Thread{
     		ac.println(g.toString());
     		ac.println(p.toString());
     		ac.println(str_valor_comun);
-    		
+
+
     		if (mod==0) {
     			exito = opt0(str_valor_comun, ac, dc);
     		} else if (mod==1){
@@ -134,7 +135,7 @@ public class SrvThread extends Thread{
 		byte[] byte_authentication = f.sign(privadaServidor, msj);
 		String str_authentication = byte2str(byte_authentication);
 		ac.println(str_authentication);
-		linea = dc.readLine();
+		linea = dc.readLine();// lee ok| error
 		
 		if (linea.compareTo("ERROR")==0) {
 			exito = false;
