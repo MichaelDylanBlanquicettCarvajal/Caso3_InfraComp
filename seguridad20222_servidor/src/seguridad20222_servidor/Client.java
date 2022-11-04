@@ -46,7 +46,7 @@ public class Client {
         this.signature = pIn.readLine();//Firma digital
         System.out.println("Esta es la firma electronica: "+ signature);
         // no tengo la llave publica 
-        //boolean ck =sc.checkSignature(,this.signature,expected);
+        //boolean ck =sc.checkSignature(, expected,this.signature,expected);
         boolean ck = false;
         if (ck)
         {
@@ -67,7 +67,6 @@ public class Client {
 
     public static void main(String[] args) throws IOException {
         Client cliente = new Client();
-        
         Socket socket = null;
         PrintWriter escritor = null;
         BufferedReader lector = null;
