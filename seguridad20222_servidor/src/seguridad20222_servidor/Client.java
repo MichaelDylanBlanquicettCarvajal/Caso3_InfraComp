@@ -37,13 +37,14 @@ public class Client {
         System.out.println("Esta es tu P: "+this.p);
 
         this.gx = pIn.readLine();// llegada de G^x
-        System.out.println(this.gx);
+        System.out.println("Esta es tu gx: "+this.gx);
 
 
 
 
         String expected = this.g +","+this.p+"," +this.gx;// el mensaje correcto
-        this.signature = pIn.readLine();
+        this.signature = pIn.readLine();//Firma digital
+        System.out.println("Esta es la firma electronica: "+ signature);
         // no tengo la llave publica 
         //boolean ck =sc.checkSignature(,this.signature,expected);
         boolean ck = false;
