@@ -28,6 +28,7 @@ public class SrvThread extends Thread{
 	private BigInteger g;
 	private SecurityFunctions f;	
 	private int mod;
+	private PublicKey pKey;
 
 	SrvThread (Socket csP, int idP, int modP) {
 		sc = csP;
@@ -61,6 +62,7 @@ public class SrvThread extends Thread{
 
 			PrivateKey privadaServidor = f.read_kmin("datos_asim_srv.pri",dlg);
 			PublicKey publicaServidor = f.read_kplus("datos_asim_srv.pub",dlg);
+			this.pKey = publicaServidor;
 			PrintWriter ac = new PrintWriter(sc.getOutputStream() , true);
 			BufferedReader dc = new BufferedReader(new InputStreamReader(sc.getInputStream()));
 				    	
@@ -81,6 +83,7 @@ public class SrvThread extends Thread{
     		ac.println(g.toString());
     		ac.println(p.toString());
     		ac.println(str_valor_comun);
+			ac.println(publicaServidor.toString());
 
 
     		if (mod==0) {
@@ -303,6 +306,11 @@ public class SrvThread extends Thread{
 	    	}
 		} 
 		return exito;
+	}
+	public PublicKey getKey()
+	{
+		return pKey;
+
 	}
 	
 	public byte[] str2byte( String ss)
