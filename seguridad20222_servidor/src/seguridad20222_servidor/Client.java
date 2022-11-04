@@ -29,14 +29,18 @@ public class Client {
         System.out.println("Escriba un numero ");
         String secure_int =  stdln.readLine();
         pout.println(secure_int);// envío secure Int
-        pout.close();
+
+
         this.g= pIn.readLine();// llegada de G
-        System.out.println(this.g);
+        System.out.println("Esta es tu G:"+this.g);
         this.p = pIn.readLine();// llegada de P
-        System.out.println(this.p);
+        System.out.println("Esta es tu P: "+this.p);
 
         this.gx = pIn.readLine();// llegada de G^x
         System.out.println(this.gx);
+
+
+
 
         String expected = this.g +","+this.p+"," +this.gx;// el mensaje correcto
         this.signature = pIn.readLine();
@@ -78,7 +82,7 @@ public class Client {
             System.exit(-1);
         }
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-        cliente.procesar(stdIn, stdIn, escritor); 
+        cliente.procesar(stdIn, lector, escritor); 
         stdIn.close();
         lector.close();
         escritor.close();

@@ -76,7 +76,7 @@ public class SrvThread extends Thread{
     		BigInteger valor_comun = G2X(g,bix,p); // diffhelman
     		String str_valor_comun = valor_comun.toString();
     		System.out.println(dlg + "G2X: "+str_valor_comun);
-    		    		
+    		System.out.println(mod);
     		// sending G, P y G^x
     		ac.println(g.toString());
     		ac.println(p.toString());
