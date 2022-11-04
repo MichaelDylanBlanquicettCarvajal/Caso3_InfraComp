@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.security.PublicKey;
 
 public class Client {
-    public static final int PUERTO =3040;
+    public static final int PUERTO =4030;
     public static final String SERVIDOR = "localhost";
 
     private String p;
@@ -29,10 +29,15 @@ public class Client {
         System.out.println("Escriba un numero ");
         String secure_int =  stdln.readLine();
         pout.println(secure_int);// envío secure Int
-
+        pout.close();
         this.g= pIn.readLine();// llegada de G
+        System.out.println(this.g);
         this.p = pIn.readLine();// llegada de P
+        System.out.println(this.p);
+
         this.gx = pIn.readLine();// llegada de G^x
+        System.out.println(this.gx);
+
         String expected = this.g +","+this.p+"," +this.gx;// el mensaje correcto
         this.signature = pIn.readLine();
         // no tengo la llave publica 
