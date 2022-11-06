@@ -19,16 +19,19 @@ public class Client {
     private BigInteger gy;
     private SecurityFunctions sc;
     private String signature;
+    private PublicKey publicaServer;
 
     public void Client() {
         
     }
 
-    public   void procesar(BufferedReader stdln, BufferedReader pIn, PrintWriter pout) throws IOException
+    public void procesar(BufferedReader stdln, BufferedReader pIn, PrintWriter pout) throws IOException
     {
         System.out.println("Escriba un numero ");
         String secure_int =  stdln.readLine();
         pout.println(secure_int);// envío secure Int
+
+        this.publicaServer = sc.read_kplus("datos_asim_srv.pub",pIn.readLine());
 
 
         this.g= pIn.readLine();// llegada de G
@@ -47,6 +50,7 @@ public class Client {
         System.out.println("Esta es la firma electronica: "+ signature);
         // no tengo la llave publica 
         //boolean ck =sc.checkSignature(, expected,this.signature,expected);
+        sc.checkSignature(publicaServer, this.signature, expected);
         boolean ck = false;
         if (ck)
         {
@@ -89,6 +93,27 @@ public class Client {
         socket.close();
 
     }
+
+    public byte[] str2byte( String ss)
+	{	
+		// Encapsulamiento con hexadecimales
+		byte[] ret = new byte[ss.length()/2];
+		for (int i = 0 ; i < ret.length ; i++) {
+			ret[i] = (byte) Integer.parseInt(ss.substring(i*2,(i+1)*2), 16);
+		}
+		return ret;
+	}
+	
+	public String byte2str( byte[] b )
+	{	
+		// Encapsulamiento con hexadecimales
+		String ret = "";
+		for (int i = 0 ; i < b.length ; i++) {
+			String g = Integer.toHexString(((char)b[i])&0x00ff);
+			ret += (g.length()==1?"0":"") + g;
+		}
+		return ret;
+	}
 
   
  
