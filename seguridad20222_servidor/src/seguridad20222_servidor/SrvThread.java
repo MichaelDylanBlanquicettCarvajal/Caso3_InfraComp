@@ -80,6 +80,7 @@ public class SrvThread extends Thread{
     		System.out.println(dlg + "G2X: "+str_valor_comun);
     		System.out.println(mod);
     		// sending G, P y G^x
+			ac.println(dlg);
     		ac.println(g.toString());
     		ac.println(p.toString());
     		ac.println(str_valor_comun);
