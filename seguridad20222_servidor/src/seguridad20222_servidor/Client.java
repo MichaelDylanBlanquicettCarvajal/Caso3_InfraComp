@@ -88,7 +88,15 @@ public class Client extends Thread {
 
             BigInteger gxB = new BigInteger(this.gx);
             this.llave_maestra = calcular_llave_maestra(gxB, Bx, pB);
-    		System.out.println(" llave maestra: " + this.llave_maestra.toString());
+    		System.out.println(" llave maestra: " + this.llave_maestra.toString());//* calculo de llave maestra
+            this.sk_srv = sc.csk1( this.llave_maestra.toString());// * calculo K_AB1
+            this.sk_mac = sc.csk2(this.llave_maestra.toString());// *calculo K_AB2
+
+            /**
+             * Parte 8
+             */
+            pout.println(this.gx.toString());//  * Envio 6b Gy
+
 
 
 
@@ -96,16 +104,7 @@ public class Client extends Thread {
 
         }
 
-        try {
-            this.g = lector.readLine();// llegada de G
-            System.out.println("Esta es tu G:" + this.g);
-            this.p = lector.readLine();// llegada de P
-            System.out.println("Esta es tu P: " + this.p);
-            this.gx = lector.readLine();// llegada de G^x
-            System.out.println("Esta es tu gx: " + this.gx);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       
 
  
 
