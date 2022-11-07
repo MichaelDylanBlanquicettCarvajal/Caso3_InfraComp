@@ -55,7 +55,6 @@ public class Client {
         this.signature = pIn.readLine();//Firma digital
         byte[] bsing = str2byte(this.signature);
         System.out.println("Esta es la firma electronica: "+ signature);
-        // no tengo la llave publica 
          try {
             ck =sc.checkSignature(publicaServer, bsing,expected);
         } catch (Exception e) {
