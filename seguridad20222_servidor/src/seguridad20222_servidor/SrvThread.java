@@ -5,13 +5,11 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
-import java.util.Random;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
@@ -174,7 +172,6 @@ public class SrvThread extends Thread{
 			IvParameterSpec ivSpec1 = new IvParameterSpec(iv1);
 	    	byte[] descifrado = f.sdec(byte_consulta, sk_srv,ivSpec1);
 	    	boolean verificar = f.checkInt(descifrado, sk_mac, byte_mac);
-			System.out.println(byte2str(descifrado));
 
 			System.out.println(dlg + "Integrity check:" + verificar);    		
 
@@ -182,7 +179,7 @@ public class SrvThread extends Thread{
 	    		System.out.println("==========> Test 1b: passed (Client sends matching query and MAC).");
 				System.out.println(byte2str(descifrado));
 
-	        	String str_original = new String(descifrado, StandardCharsets.UTF_8);
+	        	String str_original = byte2str(descifrado);
 	        	int valor = Integer.parseInt(str_original) + 1;
 	    		System.out.println(dlg + "Query answer:" + valor);
 	        	String str_valor = Integer.toString(valor);
@@ -265,23 +262,19 @@ public class SrvThread extends Thread{
 			String str_consulta = dc.readLine();
 			String str_mac = dc.readLine();
 			String str_iv1 = dc.readLine();
-
 			byte[] byte_consulta = str2byte(str_consulta);
 			byte[] byte_mac = str2byte(str_mac);
-			byte[] iv1 = str2byte(str_iv1);
-			IvParameterSpec ivSpec1 = new IvParameterSpec(iv1);
-
-
+			byte[] iv1_ = str2byte(str_iv1);
+			IvParameterSpec ivSpec1 = new IvParameterSpec(iv1_);
 	    	byte[] descifrado = f.sdec(byte_consulta, sk_srv,ivSpec1);
 	    	boolean verificar = f.checkInt(descifrado, sk_mac, byte_mac);
-			System.out.println(byte2str(descifrado));
 
 			System.out.println(dlg + "Integrity check:" + verificar);    		
 
 	    	if (verificar) {
 	    		System.out.println("==========> Test 2b: passed (Client sends matching query and MAC).");
 
-	        	String str_original = new String(descifrado, StandardCharsets.UTF_8);
+	        	String str_original = (byte2str(descifrado));
 				System.out.println(str_original);
 	        	int valor = Integer.parseInt(str_original) + 1;
 	    		System.out.println(dlg + "Query answer:" + valor);

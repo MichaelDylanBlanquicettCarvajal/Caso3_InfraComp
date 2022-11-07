@@ -29,14 +29,10 @@ public class Client extends Thread {
     private SecretKey sk_mac;
     private BigInteger llave_maestra;
 
-    private BufferedReader lector;
-    private PrintWriter escritor;
 
 
     
     public Client(Socket skt) throws IOException {
-        this.escritor = new PrintWriter(skt.getOutputStream() , true);
-		this.lector = new BufferedReader(new InputStreamReader(skt.getInputStream()));
     }
 
     public void procesar(BufferedReader stdln, BufferedReader pIn, PrintWriter pout) throws Exception
@@ -116,6 +112,7 @@ public class Client extends Thread {
 
 
             String m1 = byte2str(cconsulta);
+            System.out.println("Mensaje 1 cifrado " + m1);
             String m2 = byte2str(chmac);
             String iv1_str = byte2str(iv1);
 
@@ -145,6 +142,8 @@ public class Client extends Thread {
                 if (verificar)
                 {
                     pout.println("OK");
+                    String respuesta = byte2str(decifradoResp);
+                    System.out.println("El resultado a su consutal es :"+ respuesta);
 
                 }
                 else
@@ -185,7 +184,7 @@ public class Client extends Thread {
 	    return iv;
 	}
 
-    public byte[] str2byte( String ss)
+	public byte[] str2byte( String ss)
 	{	
 		// Encapsulamiento con hexadecimales
 		byte[] ret = new byte[ss.length()/2];
