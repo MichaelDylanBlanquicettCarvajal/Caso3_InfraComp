@@ -20,9 +20,10 @@ public class Client extends Thread {
     private String g;
     private String gx;
     private BigInteger gy;
-    private SecurityFunctions sc;
+
+    private SecurityFunctions sc  = new SecurityFunctions();
     private String signature;
-    private PublicKey publicaServer;
+    private PublicKey publicaServer = null;
 
     private SecretKey sk_srv;
     private SecretKey sk_mac;
@@ -48,8 +49,10 @@ public class Client extends Thread {
         System.out.println("Escriba un numero ");
         String secure_int =  stdln.readLine();
         pout.println(secure_int);// * envío secure Int
+        String dlg = pIn.readLine();
+        System.out.println("dlg evidado: "+dlg);
 
-        this.publicaServer = sc.read_kplus("datos_asim_srv.pub",pIn.readLine());
+        this.publicaServer = sc.read_kplus("datos_asim_srv.pub",dlg);
 
 
         this.g= pIn.readLine();// * llegada de G
@@ -64,10 +67,12 @@ public class Client extends Thread {
 
 
         String expected = this.g +","+this.p+"," +this.gx;// el mensaje correcto
+        System.out.println("Esto es lo que se espera:"+expected);
         this.signature = pIn.readLine();//Firma digital
         System.out.println("Esta es la firma electronica: "+ signature);
          try {
-            ck = sc.checkSignature(publicaServer, str2byte(this.signature), expected);
+            ck = sc.checkSignature(this.publicaServer, str2byte(this.signature), expected);
+            System.out.println("Correctidud : "+ck);
             
         } catch (Exception e) {
             e.printStackTrace();
