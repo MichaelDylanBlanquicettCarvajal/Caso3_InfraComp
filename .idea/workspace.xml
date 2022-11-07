@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a7337bd-e2f6-4439-af60-bbebd7bab45d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/seguridad20222_servidor/src/seguridad20222_servidor/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/seguridad20222_servidor/src/seguridad20222_servidor/ProtocoloCliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/seguridad20222_servidor/src/seguridad20222_servidor/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/seguridad20222_servidor/src/seguridad20222_servidor/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/seguridad20222_servidor/src/seguridad20222_servidor/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/seguridad20222_servidor/src/seguridad20222_servidor/SrvThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/seguridad20222_servidor/src/seguridad20222_servidor/SrvThread.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,5 +57,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
