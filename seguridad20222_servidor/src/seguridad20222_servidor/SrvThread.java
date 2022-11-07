@@ -174,11 +174,14 @@ public class SrvThread extends Thread{
 			IvParameterSpec ivSpec1 = new IvParameterSpec(iv1);
 	    	byte[] descifrado = f.sdec(byte_consulta, sk_srv,ivSpec1);
 	    	boolean verificar = f.checkInt(descifrado, sk_mac, byte_mac);
+			System.out.println(byte2str(descifrado));
+
 			System.out.println(dlg + "Integrity check:" + verificar);    		
 
 	    	if (verificar) {
 	    		System.out.println("==========> Test 1b: passed (Client sends matching query and MAC).");
-	    		
+				System.out.println(byte2str(descifrado));
+
 	        	String str_original = new String(descifrado, StandardCharsets.UTF_8);
 	        	int valor = Integer.parseInt(str_original) + 1;
 	    		System.out.println(dlg + "Query answer:" + valor);
@@ -255,23 +258,31 @@ public class SrvThread extends Thread{
     		// generating symmetric key
 			SecretKey sk_srv = f.csk1(str_llave);
 			SecretKey sk_mac = f.csk2(str_llave);
+
+
+			// entrada cifrado y hmac 
 			
 			String str_consulta = dc.readLine();
 			String str_mac = dc.readLine();
 			String str_iv1 = dc.readLine();
+
 			byte[] byte_consulta = str2byte(str_consulta);
 			byte[] byte_mac = str2byte(str_mac);
-			
 			byte[] iv1 = str2byte(str_iv1);
 			IvParameterSpec ivSpec1 = new IvParameterSpec(iv1);
+
+
 	    	byte[] descifrado = f.sdec(byte_consulta, sk_srv,ivSpec1);
 	    	boolean verificar = f.checkInt(descifrado, sk_mac, byte_mac);
+			System.out.println(byte2str(descifrado));
+
 			System.out.println(dlg + "Integrity check:" + verificar);    		
 
 	    	if (verificar) {
 	    		System.out.println("==========> Test 2b: passed (Client sends matching query and MAC).");
 
 	        	String str_original = new String(descifrado, StandardCharsets.UTF_8);
+				System.out.println(str_original);
 	        	int valor = Integer.parseInt(str_original) + 1;
 	    		System.out.println(dlg + "Query answer:" + valor);
 	        	String str_valor = Integer.toString(valor);

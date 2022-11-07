@@ -108,16 +108,21 @@ public class Client extends Thread {
              */
             System.out.println("Escriba su consulta ");
             String consulta =  stdln.readLine();
+            System.out.println(consulta);
             IvParameterSpec iv1_ = new IvParameterSpec(iv1);
 
             byte[] cconsulta = sc.senc(str2byte(consulta), sk_srv, iv1_, "Cliente");
             byte[] chmac = sc.hmac(str2byte(consulta),sk_mac);
 
 
+            String m1 = byte2str(cconsulta);
+            String m2 = byte2str(chmac);
+            String iv1_str = byte2str(iv1);
 
-            pout.println(byte2str(cconsulta));//* envío consulta cifrada
-            pout.println(byte2str(chmac));//* envío hmac 
-            pout.println(byte2str(iv1));//* envío iv1
+
+            pout.println(m1);//* envío consulta cifrada
+            pout.println(m2);//* envío hmac 
+            pout.println(iv1_str);//* envío iv1
 
             /**
              * parte 10, 11
@@ -136,7 +141,7 @@ public class Client extends Thread {
                 byte[]  cResB = str2byte(cRes);
                 byte[]  hmacB = str2byte(hmacResp);
                 byte[] decifradoResp = sc.sdec(cResB, sk_srv, iv2_);
-                boolean verificar =sc.checkInt(decifradoResp, sk_mac, hmacB);
+                boolean verificar =sc.checkInt( decifradoResp, sk_mac, hmacB);
                 if (verificar)
                 {
                     pout.println("OK");
