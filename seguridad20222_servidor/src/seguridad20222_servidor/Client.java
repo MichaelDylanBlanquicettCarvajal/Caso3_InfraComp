@@ -64,10 +64,10 @@ public class Client extends Thread {
 
         String expected = this.g +","+this.p+"," +this.gx;// el mensaje correcto
         this.signature = pIn.readLine();//Firma digital
-        byte[] bsing = str2byte(this.signature);
         System.out.println("Esta es la firma electronica: "+ signature);
          try {
-            ck =sc.checkSignature(publicaServer, bsing,expected);
+            ck = sc.checkSignature(publicaServer, str2byte(this.signature), expected);
+            ;
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("No se ha podido revisar la firma");// cuando no se puede hacer el check
@@ -88,7 +88,7 @@ public class Client extends Thread {
 
             BigInteger gxB = new BigInteger(this.gx);
             this.llave_maestra = calcular_llave_maestra(gxB, Bx, pB);
-    		System.out.println(" llave maestra: " + this.llave_maestra.);
+    		System.out.println(" llave maestra: " + this.llave_maestra.toString());
 
 
 
@@ -107,55 +107,12 @@ public class Client extends Thread {
             e.printStackTrace();
         }
 
-        String expected = this.g + "," + this.p + "," + this.gx;// el mensaje correcto
-
-        try {
-            this.signature = lector.readLine();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } // Firma digital
-
-        System.out.println("Esta es la firma electronica: " + signature);
-
-        boolean ck = false;
-
-        try {
-            ck = sf.checkSignature(publicaServer, str2byte(this.signature), expected);
-
-            if (ck) {
-                escritor.println("OK");// envío por le canal
-                escritor.println();
-            } else {
-                escritor.println("ERROR");
-            }
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+ 
 
         
     }
 
-    public byte[] str2byte(String ss) {
-        // Encapsulamiento con hexadecimales
-        byte[] ret = new byte[ss.length() / 2];
-        for (int i = 0; i < ret.length; i++) {
-            ret[i] = (byte) Integer.parseInt(ss.substring(i * 2, (i + 1) * 2), 16);
-        }
-        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-        try {
-			cliente.procesar(stdIn, lector, escritor);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-        stdIn.close();
-        lector.close();
-        escritor.close();
-        socket.close();
-
-    }
+   
 
     public byte[] str2byte( String ss)
 	{	
