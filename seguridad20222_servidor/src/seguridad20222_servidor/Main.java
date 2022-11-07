@@ -29,6 +29,12 @@ public class Main {
         }
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
         Client cliente = new Client(socket);
+        try {
+            cliente.procesar(stdIn, lector, escritor);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         stdIn.close();
         lector.close();
