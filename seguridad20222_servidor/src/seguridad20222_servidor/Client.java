@@ -86,14 +86,17 @@ public class Client extends Thread {
             SecureRandom r = new SecureRandom();// X
             int x = Math.abs(r.nextInt());
             Long longx = Long.valueOf(x);
-    		BigInteger Bx = BigInteger.valueOf(longx);
+    		BigInteger Bx = BigInteger.valueOf(1);
 
 
             this.gy = G2Y(gB, Bx, pB);// generate Gy
-            pout.println(this.gx.toString());//  * Envio 6b Gy
+            pout.println(this.gy.toString());//  * Envio 6b Gy
 
             BigInteger gxB = new BigInteger(this.gx);
             this.llave_maestra = calcular_llave_maestra(gxB, Bx, pB);
+
+
+
     		System.out.println(" llave maestra: " + this.llave_maestra.toString());//* calculo de llave maestra
             this.sk_srv = sc.csk1( this.llave_maestra.toString());// * calculo K_AB1
             this.sk_mac = sc.csk2(this.llave_maestra.toString());// *calculo K_AB2
@@ -155,6 +158,12 @@ public class Client extends Thread {
 
 
             
+
+        }
+        else 
+        {
+            pout.println("ERROR");//*  envío por le canal cuando está mal
+
 
         }
 

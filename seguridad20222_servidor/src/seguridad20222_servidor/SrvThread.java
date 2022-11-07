@@ -70,11 +70,8 @@ public class SrvThread extends Thread{
 			System.out.println(dlg + "reading request: " + linea);
     		
     		generateGandP();// P
-			SecureRandom r = new SecureRandom();// X
-			int x = Math.abs(r.nextInt());
 			
-    		Long longx = Long.valueOf(x);
-    		BigInteger bix = BigInteger.valueOf(longx);
+    		BigInteger bix = genX(p);
     		BigInteger valor_comun = G2X(g,bix,p); // diffhelman
     		String str_valor_comun = valor_comun.toString();
     		System.out.println(dlg + "G2X: "+str_valor_comun);
@@ -369,6 +366,24 @@ public class SrvThread extends Thread{
 		kpGen.initialize(1024, new SecureRandom());
 		KeyPair kp = kpGen.genKeyPair();
 		return kp.getPrivate();
+	}
+	private BigInteger genX(BigInteger p)
+	{
+		SecureRandom r = new SecureRandom();// X
+		int x = Math.abs(r.nextInt());
+		Long longx = Long.valueOf(x);
+		BigInteger Bx = BigInteger.valueOf(longx);
+		if (Bx.compareTo(p)==-1)
+		{
+			return Bx;
+		}
+		else 
+		{
+			genX(p);
+		
+		}
+		return Bx;
+
 	}
 	
 }
