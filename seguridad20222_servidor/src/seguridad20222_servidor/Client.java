@@ -11,6 +11,7 @@ import java.security.PublicKey;
 import java.security.SecureRandom;
 
 import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 
 public class Client extends Thread {
 
@@ -67,7 +68,7 @@ public class Client extends Thread {
         System.out.println("Esta es la firma electronica: "+ signature);
          try {
             ck = sc.checkSignature(publicaServer, str2byte(this.signature), expected);
-            ;
+            
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("No se ha podido revisar la firma");// cuando no se puede hacer el check
@@ -91,11 +92,59 @@ public class Client extends Thread {
     		System.out.println(" llave maestra: " + this.llave_maestra.toString());//* calculo de llave maestra
             this.sk_srv = sc.csk1( this.llave_maestra.toString());// * calculo K_AB1
             this.sk_mac = sc.csk2(this.llave_maestra.toString());// *calculo K_AB2
+            byte[] iv1=generateIvBytes();// * genera iv1
+
 
             /**
              * Parte 8
              */
-            pout.println(this.gx.toString());//  * Envio 6b Gy
+            System.out.println("Escriba su consulta ");
+            String consulta =  stdln.readLine();
+            IvParameterSpec iv1_ = new IvParameterSpec(iv1);
+
+            byte[] cconsulta = sc.senc(str2byte(consulta), sk_srv, iv1_, "Cliente");
+            byte[] chmac = sc.hmac(str2byte(consulta),sk_mac);
+
+
+
+            pout.println(byte2str(cconsulta));//* envío consulta cifrada
+            pout.println(byte2str(chmac));//* envío hmac 
+            pout.println(byte2str(iv1));//* envío iv1
+
+            /**
+             * parte 10, 11
+             */
+            String response=pIn.readLine();
+           
+            if (response.compareTo("OK")==0)
+            {
+                String cRes = pIn.readLine();
+                String hmacResp=pIn.readLine();
+                String iv2 = pIn.readLine();
+                /**
+                 * parte 12
+                 */
+                IvParameterSpec iv2_ = new IvParameterSpec(str2byte(iv2));
+                byte[]  cResB = str2byte(cRes);
+                byte[]  hmacB = str2byte(hmacResp);
+                byte[] decifradoResp = sc.sdec(cResB, sk_srv, iv2_);
+                boolean verificar =sc.checkInt(decifradoResp, sk_mac, hmacB);
+                if (verificar)
+                {
+                    pout.println("OK");
+
+                }
+                else
+                {
+                    pout.println("ERROR");
+                }
+
+            }
+            else if (response.compareTo("ERROR")==0)
+            {
+                throw new Exception("Client did not send matching query and MAC");
+            }
+
 
 
 
@@ -111,7 +160,11 @@ public class Client extends Thread {
         
     }
 
-   
+    private byte[] generateIvBytes() {
+	    byte[] iv = new byte[16];
+	    new SecureRandom().nextBytes(iv);
+	    return iv;
+	}
 
     public byte[] str2byte( String ss)
 	{	
