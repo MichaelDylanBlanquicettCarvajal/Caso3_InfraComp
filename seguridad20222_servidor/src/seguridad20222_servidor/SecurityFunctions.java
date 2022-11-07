@@ -118,8 +118,9 @@ public class SecurityFunctions {
 		PublicKey pubkey = null;
 		System.out.println(id+nombreArchivo);
 		try {
-			is1 = new FileInputStream(nombreArchivo);
-			File f = new File(nombreArchivo);		
+			is1 = new FileInputStream("seguridad20222_servidor/data/"+nombreArchivo);
+			File f = new File("seguridad20222_servidor/data/"+nombreArchivo);	
+			System.out.println(f.exists());	
 			byte[] inBytes1 = new byte[(int)f.length()];
 			is1.read(inBytes1);
 			KeyFactory kf = KeyFactory.getInstance("RSA");
@@ -137,8 +138,8 @@ public class SecurityFunctions {
 		System.out.println(id+nombreArchivo);
 		FileInputStream is2;
 		try {
-			is2 = new FileInputStream(nombreArchivo);
-			File f2 = new File(nombreArchivo);
+			is2 = new FileInputStream("seguridad20222_servidor/data/"+nombreArchivo);
+			File f2 = new File("seguridad20222_servidor/data/"+nombreArchivo);
 			byte[] inBytes2 = new byte[(int)f2.length()];
 			is2.read(inBytes2);
 			KeyFactory kf = KeyFactory.getInstance("RSA");
