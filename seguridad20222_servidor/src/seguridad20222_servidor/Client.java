@@ -10,6 +10,8 @@ import java.net.Socket;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 
+import javax.crypto.SecretKey;
+
 public class Client {
     public static final int PUERTO =4030;
     public static final String SERVIDOR = "localhost";
@@ -21,6 +23,11 @@ public class Client {
     private SecurityFunctions sc;
     private String signature;
     private PublicKey publicaServer;
+
+
+    private SecretKey sk_srv;
+    private SecretKey sk_mac;
+    private BigInteger llave_maestra;
 
     public void Client() {
         
@@ -74,6 +81,13 @@ public class Client {
 
             this.gy = G2Y(gB, Bx, pB);// generate Gy
             pout.println(this.gx.toString());//  * Envio 6b Gy
+
+            BigInteger gxB = new BigInteger(this.gx);
+            this.llave_maestra = calcular_llave_maestra(gxB, Bx, pB);
+    		System.out.println(" llave maestra: " + this.llave_maestra);
+
+
+
             
 
         }
@@ -145,7 +159,9 @@ public class Client {
         return base.modPow(expoenent, modulo);
 
     }
-
+    private BigInteger calcular_llave_maestra(BigInteger base, BigInteger exponente, BigInteger modulo) {
+		return base.modPow(exponente, modulo);
+	}
   
  
 
