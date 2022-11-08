@@ -28,6 +28,7 @@ public class SrvThread extends Thread{
 	private int mod;
 	private PublicKey pKey;
 
+
 	SrvThread (Socket csP, int idP, int modP) {
 		sc = csP;
 		dlg = new String("concurrent server " + idP + ": ");
@@ -138,6 +139,7 @@ public class SrvThread extends Thread{
 		String str_authentication = byte2str(byte_authentication);
 		ac.println(str_authentication);
 		linea = dc.readLine();// lee ok| error
+		System.out.println(linea);
 		
 		if (linea.compareTo("ERROR")==0) {
 			exito = false;
